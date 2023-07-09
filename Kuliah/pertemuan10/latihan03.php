@@ -1,8 +1,6 @@
 <?php
 require 'functions.php';
 $mahasiswa = query("SELECT * FROM mahasiswa");
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +17,7 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
     <tr>
       <th>#</th>
       <th>Gambar</th>
-      <th>NRP</th>
       <th>Nama</th>
-      <th>Email</th>
-      <th>Jurusan</th>
       <th>Aksi</th>
     </tr>
 
@@ -31,12 +26,9 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
       <tr>
         <td><?= $i++; ?></td>
         <td><img src="img/<?= $m['gambar']; ?>" width="65"></td>
-        <td><?= $m['nrp']; ?></td>
         <td><?= $m['nama']; ?></td>
-        <td><?= $m['email']; ?></td>
-        <td><?= $m['jurusan']; ?></td>
         <td>
-          <a href="">ubah</a> | <a href="">hapus</a>
+          <a href="detail.php?ID=<?= $m['ID']; ?>">Lihat Detail</a>
         </td>
       </tr>
     <?php endforeach; ?>
