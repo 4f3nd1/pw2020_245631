@@ -24,6 +24,61 @@ function query($query)
   return $rows;
 }
 
+function upload()
+{
+  $nama_file = $_FILES['gambar']['name'];
+  $type_file = $_FILES['gambar']['type'];
+  $ukuran_file = $_FILES['gambar']['size'];
+  $error = $_FILES['gambar']['error'];
+  $tmp_file = $_FILES['gambar']['tmp_name'];
+
+  //ketika tidak aga gambar yg dipilih
+  if ($error == 4) {
+    echo "<script>
+  alert('pilih gambar dulu');
+</script>";
+    return false;
+  }
+
+  //cek extensi file
+  $daftar_gambar = ['jpg', 'jpeg', 'png'];
+  $ekstensi_file = explode('.', $nama_file);
+  $ekstensi_file = strtolower(end($ekstensi_file));
+
+  if (!in_array($ekstensi_file, $daftar_gambar)) {
+    echo "<script>
+  alert('yang anda pilih bukan gambar!');
+</script>";
+    return false;
+  }
+
+  //cek type file
+  if ($type_file != 'image/jpeg' && $type_file != 'image/png' && $type_file = 'image/jpg') {
+    echo "<script>
+  alert('yang anda pilih bukan gambar!');
+</script>";
+    return false;
+  }
+
+  //cek ukuran file
+  //maks 5mb = 5000000
+  if ($ukuran_file > 500000) {
+    echo "<script>
+  alert('ukuran gambar terlalu besar!');
+</script>";
+    return false;
+  }
+
+  //lolos pengecekan
+  //siap upload
+  //generate na file baru
+  $nama_file_baru = uniqid();
+  $nama_file_baru .= '.';
+  $nama_file_baru .= $ekstensi_file;
+  move_uploaded_file($tmp_file, 'img/' . $nama_file_baru);
+  return $nama_file_baru;
+}
+
 function tambah($data)
 {
   $conn = koneksi();
@@ -31,7 +86,14 @@ function tambah($data)
   $nrp = htmlspecialchars($data['nrp']);
   $email = htmlspecialchars($data['email']);
   $jurusan = htmlspecialchars($data['jurusan']);
-  $gambar = htmlspecialchars($data['gambar']);
+  // $gambar = htmlspecialchars($data['gambar']);
+
+  //upload gambar
+  $gambar = upload();
+
+  if (!$gambar) {
+    return false;
+  }
 
   $query = "INSERT INTO mahasiswa VALUES(null, '$nama','$nrp','$email','$jurusan','$gambar');";
   mysqli_query($conn, $query) or die(mysqli_error($conn));
