@@ -2,21 +2,21 @@
 session_start();
 
 if (!isset($_SESSION['login'])) {
-  header("location: login.php");
+  header("Location: login.php");
   exit;
 }
 
 require 'functions.php';
 
-//cek apakah tombol tambah sudah di tekan
+// cek apakah tombol tambah sudah ditekan
 if (isset($_POST['tambah'])) {
   if (tambah($_POST) > 0) {
     echo "<script>
-    alert('data berhasil ditambahkan');
-    document.location.href='index.php';
-    </script>";
+            alert('data berhasil ditambahkan');
+            document.location.href = 'index.php';
+         </script>";
   } else {
-    echo "data gagal ditambahkan";
+    echo "data gagal ditambahkan!";
   }
 }
 
@@ -31,7 +31,7 @@ if (isset($_POST['tambah'])) {
 </head>
 
 <body>
-  <h3>Form tambah data mahasiswa</h3>
+  <h3>Form Tambah Data Mahasiswa</h3>
   <form action="" method="POST" enctype="multipart/form-data">
     <ul>
       <li>
@@ -48,7 +48,7 @@ if (isset($_POST['tambah'])) {
       </li>
       <li>
         <label>
-          E-Mail :
+          Email :
           <input type="text" name="email" required>
         </label>
       </li>
@@ -61,15 +61,17 @@ if (isset($_POST['tambah'])) {
       <li>
         <label>
           Gambar :
-          <input type="file" name="gambar">
+          <input type="file" name="gambar" class="gambar" onchange="previewImage()">
         </label>
+        <img src="img/nophoto.png" width="120" style="display: block;" class="img-preview">
       </li>
       <li>
-        <button type="submit" name="tambah">Tambah data!</button>
+        <button type="submit" name="tambah">Tambah Data!</button>
       </li>
     </ul>
-
   </form>
+
+  <script src="js/script.js"></script>
 </body>
 
 </html>

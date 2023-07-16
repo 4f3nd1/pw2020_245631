@@ -2,14 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['login'])) {
-  header("location: login.php");
+  header("Location: login.php");
   exit;
 }
 
 require 'functions.php';
 $mahasiswa = query("SELECT * FROM mahasiswa");
 
-//ketika tombol cari diklik
+// ketika tombol cari diklik
 if (isset($_POST['cari'])) {
   $mahasiswa = cari($_POST['keyword']);
 }
@@ -19,24 +19,28 @@ if (isset($_POST['cari'])) {
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Mahasiswa</title>
+  <title>Welcome</title>
 </head>
 
 <body>
   <a href="logout.php">Logout</a>
+  <p>
   <h3>Daftar Mahasiswa</h3>
+  </p>
 
   <a href="tambah.php">Tambah Data Mahasiswa</a>
   <br><br>
 
   <form action="" method="POST">
-    <input type="text" name="keyword" size="40" placeholder="masukan keyword pencarian.." autocomplete="off" autofocus class="keyword">
-    <button type="submit" name="cari" class="tombol-cari">Cari data</button>
+    <input type="text" name="keyword" size="40" placeholder="masukkan keyword pencarian.." autocomplete="off" autofocus class="keyword">
+    <button type="submit" name="cari" class="tombol-cari">Cari!</button>
   </form>
   <br>
+
   <div class="container">
+
     <table border="1" cellpadding="10" cellspacing="0">
       <tr>
         <th>#</th>
@@ -57,17 +61,17 @@ if (isset($_POST['cari'])) {
       foreach ($mahasiswa as $m) : ?>
         <tr>
           <td><?= $i++; ?></td>
-          <td><img src="img/<?= $m['gambar']; ?>" width="65"></td>
+          <td><img src="img/<?= $m['gambar']; ?>" width="60"></td>
           <td><?= $m['nama']; ?></td>
           <td>
-            <a href="detail.php?ID=<?= $m['ID']; ?>">Lihat Detail</a>
+            <a href="detail.php?ID=<?= $m['ID']; ?>">lihat detail</a>
           </td>
         </tr>
       <?php endforeach; ?>
     </table>
   </div>
-  <script src="js/script.js"></script>
 
+  <script src="js/script.js"></script>
 </body>
 
 </html>
